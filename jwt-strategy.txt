@@ -1,0 +1,13 @@
+// nuxt middleware
+export default defineNuxtRouteMiddleware((to, from) => {
+  if (to.meta.isPublic) return true;
+
+  const invalidNav = {
+    path: '/login',
+    query: { m: 'Your session has expired. Please login again.' }
+  }
+
+  const hasToken = localStorage.getItem('BIBBLEO_JWT');
+  if (!hasToken) return navigateTo(invalidNav);
+})
+

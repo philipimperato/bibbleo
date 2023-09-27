@@ -1,0 +1,11 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer components {
+  .btn { @apply flex w-full rounded-md justify-center font-semibold focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 shadow-sm }
+  .btn-base { @apply text-sm leading-6 px-3 py-1.5 }
+  .btn-indigo { @apply bg-indigo-500 text-white hover:bg-indigo-400 focus-visible:outline-indigo-500 }
+}
+
+
