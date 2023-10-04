@@ -68,11 +68,17 @@ export class Rest {
     return useQuery({
       queryKey: [this.queryKey, 'find'],
       queryFn: async () => {
-        const { refreshIfExpired } = useToken()
+        const { refreshIfExpired, removeTokens } = useToken()
         await refreshIfExpired()
 
         const stream = await this.getQueryFn('find', params)
         const response = await stream?.json()
+
+        if (response.statusCode === 401) {
+          removeTokens()
+          navigateTo('/login')
+        }
+
         return response;
       },
       ...this.DEFAULTS

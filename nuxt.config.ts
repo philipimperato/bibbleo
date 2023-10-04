@@ -2,9 +2,9 @@ export default defineNuxtConfig({
   devtools: { enabled: true },
   modules: [
     '@formkit/nuxt',
-    '@pinia/nuxt',
     'nuxt-feathers-pinia',
-    '@nuxt/ui'
+    '@nuxt/ui',
+    'nuxt-icon'
   ],
   components: [
     {

@@ -61,7 +61,10 @@ const register = async (registerData: any) => {
                   <label for="password" class="block text-sm font-medium leading-6 text-white">Password</label>
                 </div>
                 <div class="mt-2">
-                  <TextField validation="required|length:4" name="password" />
+                  <TextField
+                    type="password"
+                    validation="required|length:4"
+                    name="password" />
                 </div>
               </div>
 
@@ -71,6 +74,7 @@ const register = async (registerData: any) => {
                 </div>
                 <div class="mt-2">
                   <TextField
+                    type="password"
                     validation="required|confirm:password"
                     :validation-messages="{
                       confirm: 'Must match password',

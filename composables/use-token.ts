@@ -64,8 +64,12 @@ export const useToken = () => {
     }
   }
 
-  const logout = async () => {
+  const removeTokens = () => {
     localStorage.removeItem(TOKENS)
+  }
+
+  const logout = async () => {
+    removeTokens()
 
     try {
       await request.$fetch('auth/logout')
@@ -96,6 +100,7 @@ export const useToken = () => {
     setTokens,
     getTokens,
     hasTokens,
+    removeTokens,
     get,
     refresh
   }

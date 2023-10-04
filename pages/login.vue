@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { FormKitMessages } from '@formkit/vue'
+
 definePageMeta({ isPublic: true })
 
 const route = useRoute();
@@ -10,11 +11,16 @@ const { setTokens } = useToken()
 const { add } = useNotification()
 const { mutateAsync: authorize } = api.service('auth').create()
 
+// Remove error on refresh
 if (route.query.m) {
   add(route.query.m as string, 'Error')
   router.replace({ query: {} })
 }
 
+// dialog management
+const isForgotPasswordOpen = ref(false)
+
+// authentication
 const login = async (loginData: any) => {
   const response = await authorize(loginData)
 
@@ -41,13 +47,13 @@ const login = async (loginData: any) => {
         <FormKit
           form-class="space-y-6"
           type="form"
+          :incomplete-message="false"
           @submit="login"
           submit-label="Login"
           :submit-attrs="{
             inputClass: 'btn btn-base btn-indigo'
           }"
         >
-          <FormKitMessages class="hidden" />
           <div>
             <label for="email" class="block text-sm font-medium leading-6 text-white">Email</label>
             <div class="mt-2">
@@ -58,15 +64,28 @@ const login = async (loginData: any) => {
           <div>
             <label for="email" class="block text-sm font-medium leading-6 text-white">Password</label>
             <div class="mt-2">
-              <TextField validation="required" name="password" />
+              <TextField type="password" validation="required" name="password" />
             </div>
+
+            <div
+              @click="isForgotPasswordOpen = true"
+              class="text-sm text-gray-400 mt-4 hover:text-gray-200 cursor-pointer">
+              Forgot Password
+            </div>
+
+            <ForgotPasswordDialog
+              :is-open="isForgotPasswordOpen"
+              @close="isForgotPasswordOpen = false">
+            </ForgotPasswordDialog>
           </div>
         </FormKit>
 
         <p class="mt-10 text-center text-sm text-gray-400">
           Not a member?
           {{ ' ' }}
-          <a href="#" class="font-semibold leading-6 text-indigo-400 hover:text-indigo-300">Register</a>
+          <a href="#" class="font-semibold leading-6 text-indigo-400 hover:text-indigo-300">
+            <NuxtLink to="/register">Register</NuxtLink>
+          </a>
         </p>
       </div>
     </div>
